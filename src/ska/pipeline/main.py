@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
 def main():
-    
-    return "Test"
+
+    return "This is a dummy workflow script"

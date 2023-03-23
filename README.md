@@ -8,7 +8,7 @@ This project is defined on the basis of this template https://gitlab.com/ska-tel
 This repository is created in PI18, currently being developed by Team Schaap.
 
 ## Usage
-How to use this repository?
+TODO (AST-1205)
 
 ## Contribute
 If you want to contribute to this project, please consult the section below.
@@ -63,8 +63,7 @@ Testing
  -------------
  * Use [Pylint](https://www.pylint.org) as the code analysis framework
  * By default it uses the [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/)
- * Use the provided `code-analysis.sh` script in order to run the code analysis in the `module` and `tests`
- * Code analysis should be run by calling `pylint ska_python_skeleton`. All pertaining options reside under the `.pylintrc` file.
+ * Code analysis should be run by calling `pylint ska_sdp_wflow_low_selfcal`. All pertaining options reside under the `.pylintrc` file.
  * Code analysis should only raise document related warnings (i.e. `#FIXME` comments) before merging the code
  
 Writing documentation
@@ -82,13 +81,3 @@ $ make html
 ```
 * The documentation can then be consulted by opening the file `./docs/build/html/index.html`
 
-Development
------------
-
-### PyCharm
-
-As this project uses a `src` [folder structure](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure),
-under _Preferences > Project Structure_, the `src` folder needs to be marked as "Sources".  That will
-allow the interpreter to be aware of the package from folders like `tests` that are outside of `src`.
-When adding Run/Debug configurations, make sure "Add content roots to PYTHONPATH" and
-"Add source roots to PYTHONPATH" are checked.

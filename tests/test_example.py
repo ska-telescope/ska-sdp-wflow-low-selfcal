@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for the ska_python_skeleton module."""
+"""Tests for the ska_sdp_wflow_low_selfcal module."""
 import pytest
 
 from ska.pipeline import main
 
-def test_something():
-    """Example: Assert with no defined return value."""
+def test_example():
     assert main() == "Test"
 
