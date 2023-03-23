@@ -5,7 +5,7 @@ SHELL := /bin/bash
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = skeleton
+SPHINXPROJ    = pipeline
 SOURCEDIR     = src
 BUILDDIR      = build
 

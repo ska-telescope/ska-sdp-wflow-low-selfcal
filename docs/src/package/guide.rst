@@ -22,11 +22,6 @@ Public API Documentation
 Functions
 ---------
 
-.. automodule:: ska.skeleton
+.. automodule:: ska.pipeline
     :members:
 
-Classes
--------
-.. autoclass:: ska.skeleton.SKA
-    :noindex:
-    :members:
