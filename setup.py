@@ -8,13 +8,13 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 setup(
-    name='ska_python_skeleton',
+    name='ska_sdp_wflow_low_selfcal',
     version='0.0.0',
     description="",
     long_description=readme + '\n\n',
-    author="Your Name",
-    author_email='your.email@mail.com',
-    url='https://github.com/ska-telescope/ska-python-skeleton',
+    author="Chiara Salvoni",
+    author_email='chiara.salvoni@cgi.com',
+    url='https://gitlab.com/ska-telescope/sdp/science-pipeline-workflows/ska-sdp-wflow-low-selfcal',
     packages=setuptools.find_namespace_packages(where="src", include=["ska.*"]),
     package_dir={"": "src"},
     include_package_data=True,
