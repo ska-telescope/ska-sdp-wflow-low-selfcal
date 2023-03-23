@@ -7,5 +7,5 @@ import pytest
 from ska.pipeline import main
 
 def test_example():
-    assert main() == "Test"
+    assert main() == "This is a dummy workflow script"
 
