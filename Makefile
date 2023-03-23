@@ -20,8 +20,8 @@ lint:
 
 	# FIXME pylint needs to run twice since there is no way go gather the text and junit xml output at the same time
 	pip3 install pylint2junit; \
-	pylint --output-format=parseable src/ska/pipeline | tee ./build/code_analysis.stdout; \
-	pylint --output-format=pylint2junit.JunitReporter src/ska/pipeline > ./build/reports/linting.xml;
+	pylint --output-format=parseable src/ska_sdp_wflow_low_selfcal/pipeline | tee ./build/code_analysis.stdout; \
+	pylint --output-format=pylint2junit.JunitReporter src/ska_sdp_wflow_low_selfcal/pipeline > ./build/reports/linting.xml;
 
 
 .PHONY: all test lint
