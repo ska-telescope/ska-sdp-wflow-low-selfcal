@@ -1,5 +1,5 @@
 # SKA SDP Wflow Low Selfcal
-This repository defines a self calibration pipeline for the SKA LOW. It relies on DP3 and WSClean.
+This repository defines a self calibration pipeline for the SKA LOW. It relies on DP3 and WSClean. This repository is currently being set up, and not in a usable state yet.
 
 ## Getting started
 This project is defined on the basis of this template https://gitlab.com/ska-telescope/templates/ska-python-skeleton ([![Documentation Status](https://readthedocs.org/projects/ska-telescope-templates-ska-python-skeleton/badge/?version=latest)](https://developer.skatelescope.org/projects/ska-python-skeleton/en/latest/?badge=latest))
