@@ -2,7 +2,7 @@ from subprocess import check_call
 
 common_args = [
             "checkparset=1",
-            "msout=test.MS",
+            "msout=/var/scratch/csalvoni/data/test.MS",
             "steps=[averager]",
             "numthreads=1",
             "msout.overwrite=true"
