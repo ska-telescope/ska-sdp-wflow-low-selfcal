@@ -5,7 +5,7 @@ common_args = [
             "-size", "512", "512",
             "-scale", "0.01",
             "-channel-range", "0", "1",
-            "-name", "dummy",
+            "-name", "/var/scratch/csalvoni/data/dummy",
         ]
 
 def run_wsclean(msin):
