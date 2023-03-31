@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "ska-sdp-wflow-low-selfcal"
+version = "0.1.0"
+description = "SKA LOW selfcal pipeline"
+authors = ["chiarasal <chiara.salvoni@cgi.com>"]
+license = "\"BSD-3-Clause\""
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+pluggy = "^1.0.0"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.12.0"
+black = "^23.3.0"
+flake8 = "^6.0.0"
+pylint = "^2.17.1"
+pylint-junit = "^0.3.2"
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+build = "^0.10.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
