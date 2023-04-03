@@ -98,7 +98,7 @@ def run_dp3(msin, mode):
                 "[Patch_21],[Patch_22],[Patch_23],[Patch_24],[Patch_25],"
                 "[Patch_26],[Patch_27],[Patch_3],[Patch_4],[Patch_5],"
                 "[Patch_6],[Patch_7],[Patch_8],[Patch_9]]",
-                "predict.sourcedb=tests/test_data/grouped.skymodel",
+                "predict.sourcedb=grouped.skymodel",
             ]
             + args_predict
             + common_args
@@ -110,7 +110,7 @@ def run_dp3(msin, mode):
                 "msin.starttime=29-Mar-2013/13:59:53.007",
                 f"msin={msin}",
                 "solve.antennaconstraint=[]",
-                "solve.sourcedb=tests/test_data/grouped.skymodel",
+                "solve.sourcedb=grouped.skymodel",
             ]
             + args_calibrate_common
             + args_calibrate_scalarphase
