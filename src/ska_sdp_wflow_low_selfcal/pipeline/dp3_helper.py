@@ -20,10 +20,10 @@ args_calibrate_common = [
     "solve.smoothnessrefdistance=0.0",
     "solve.smoothnessreffrequency=143650817.87109375",
     "solve.solveralgorithm=hybrid",
-    "solve.solverlbfgs.dof=200.0",
-    "solve.solverlbfgs.iter=4",
-    "solve.solverlbfgs.minibatches=1",
-    "solve.sourcedb=calibration_skymodel.txt",
+    # "solve.solverlbfgs.dof=200.0",
+    # "solve.solverlbfgs.iter=4",
+    # "solve.solverlbfgs.minibatches=1",
+    # "solve.sourcedb=calibration_skymodel.txt",
     # "msin.starttime=21Dec2017/07:11:03.906",
     "solve.stepsize=0.02",
     "solve.tolerance=0.005",
@@ -67,13 +67,13 @@ args_predict = [
     "predict.beammode=array_factor",
     "msout.storagemanager=Dysco",
     "msout.storagemanager.databitrate=0",
-    "predict.directions=[[Patch_104],[Patch_11],[Patch_114],[Patch_189],"
-    "[Patch_222],[Patch_73],[Patch_78]]",
+    # "predict.directions=[[Patch_104],[Patch_11],[Patch_114],[Patch_189],"
+    # "[Patch_222],[Patch_73],[Patch_78]]",
     # "predict.applycal.parmdb=field-solutions.h5",
     # "msin=/tmp/c2zkydk3/stgadba1bda-7cda-4ae0-a9e2-81a73319ca3a/midbands.ms",
     "msout=midbands.ms.mjd5020557063.outlier_1_modeldata",
     "predict.onebeamperpatch=False",
-    "predict.sourcedb=outlier_1_predict_skymodel.txt",
+    # "predict.sourcedb=outlier_1_predict_skymodel.txt",
     # "msin.starttime=21Dec2017/07:11:03.906",
 ]
 
@@ -91,7 +91,14 @@ def run_dp3(msin, mode):
                 "/home/csalvoni/scratch/schaap/dp3/build/DP3",
                 f"msin={msin}",
                 "msin.starttime=29-Mar-2013/13:59:53.007",
-                "predict.applycal.parmdb=field-solutions.h5",
+                "predict.applycal.parmdb=fast_phase_0.h5parm",
+                "predict.directions=[[Patch_0],[Patch_1],[Patch_10],[Patch_11]"
+                ",[Patch_12],[Patch_13],[Patch_14],[Patch_15],[Patch_16],"
+                "[Patch_17],[Patch_18],[Patch_19],[Patch_2],[Patch_20],"
+                "[Patch_21],[Patch_22],[Patch_23],[Patch_24],[Patch_25],"
+                "[Patch_26],[Patch_27],[Patch_3],[Patch_4],[Patch_5],"
+                "[Patch_6],[Patch_7],[Patch_8],[Patch_9]]",
+                "predict.sourcedb=tests/test_data/grouped.skymodel",
             ]
             + args_predict
             + common_args
@@ -103,6 +110,7 @@ def run_dp3(msin, mode):
                 "msin.starttime=29-Mar-2013/13:59:53.007",
                 f"msin={msin}",
                 "solve.antennaconstraint=[]",
+                "solve.sourcedb=tests/test_data/grouped.skymodel",
             ]
             + args_calibrate_common
             + args_calibrate_scalarphase
