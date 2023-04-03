@@ -19,6 +19,4 @@ include .make/base.mk
 # include your own private variables for custom deployment configuration
 -include PrivateRules.mak
 
-example-start-server:
-  uvicorn src.ska_sdp_wflow_low_selfcal.pipeline.main:main 
 
