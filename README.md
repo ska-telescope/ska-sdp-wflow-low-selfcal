@@ -23,10 +23,10 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 
 Clone the repository with its submodules
 ``` 
-git clone --recursive https://gitlab.com/ska-telescope/sdp/ska-sdp-screen-fitting.git
+git clone --recursive git@gitlab.com:ska-telescope/sdp/science-pipeline-workflows/ska-sdp-wflow-low-selfcal.git
 git submodule init
 git submodule update  
-cd ska-sdp-screen-fitting
+cd ska-sdp-wflow-low-selfcal
 ```
 
 Enter poetry virtual environment and build the project
