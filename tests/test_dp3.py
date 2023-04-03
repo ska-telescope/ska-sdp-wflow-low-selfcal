@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """Tests for the ska_sdp_wflow_low_selfcal module."""
-from ska_sdp_wflow_low_selfcal.pipeline.dp3_helper import run_dp3
 import os
 import shutil
 import uuid
@@ -9,12 +8,12 @@ from subprocess import check_call
 
 import pytest
 
-#TEST_DATA = "tests/test_data/"
+from ska_sdp_wflow_low_selfcal.pipeline.dp3_helper import run_dp3
 
-
-TEST_DATA = "/home/csalvoni/schaap/ska-sdp-wflow-low-selfcal/ska-sdp-wflow-low-selfcal/tests/test_data"
+TEST_DATA = "../tests/test_data"
 MSIN = "tNDPPP-generic.MS"
 CWD = os.getcwd()
+
 
 @pytest.fixture(autouse=True)
 def source_env():
@@ -24,16 +23,12 @@ def source_env():
     os.chdir(tmpdir)
     source = f"{TEST_DATA}/{MSIN}.tgz"
     if not os.path.isfile(source):
-        raise IOError(
-            f"Not able to find {source} containing the reference solutions."
-        )
+        raise IOError(f"Not able to find {source}.")
     check_call(["tar", "xf", source])
-    
+
     skymodel_path = f"{TEST_DATA}/grouped.skymodel"
     if not os.path.isfile(skymodel_path):
-        raise IOError(
-            f"Not able to find {skymodel_path} containing the reference solutions."
-        )
+        raise IOError(f"Not able to find {skymodel_path}.")
     shutil.copy(skymodel_path, "grouped.skymodel")
 
     # Tests are executed here
@@ -41,7 +36,8 @@ def source_env():
 
     # Post-test: clean up
     os.chdir(CWD)
-    #shutil.rmtree(tmpdir)
+    shutil.rmtree(tmpdir)
+
 
 def test_pipeline_phaseonly():
     """Test DP3 phase only calibration"""
