@@ -17,40 +17,35 @@ args_calibrate_common = [
     "solve.parallelbaselines=False",
     "solve.propagatesolutions=True",
     "solve.smoothnessconstraint=3000000.0",
-    "solve.smoothnessrefdistance=0.0",
-    "solve.smoothnessreffrequency=143650817.87109375",
     "solve.solveralgorithm=hybrid",
-    # "solve.solverlbfgs.dof=200.0",
-    # "solve.solverlbfgs.iter=4",
-    # "solve.solverlbfgs.minibatches=1",
     # "solve.sourcedb=calibration_skymodel.txt",
     # "msin.starttime=21Dec2017/07:11:03.906",
     "solve.stepsize=0.02",
     "solve.tolerance=0.005",
     "solve.uvlambdamin=2000.0",
-    "msout=/var/scratch/csalvoni/data/test.MS",  # TODO
-    "msout.overwrite=true",  # TODO
 ]
 
 args_calibrate_scalarphase = [
     "solve.mode=scalarphase",
-    "solve.h5parm=fast_phase_0.h5parm",
     "solve.llssolver=qr",
     "solve.maxiter=150",
     "solve.solint=1",
+    "solve.smoothnessrefdistance=0.0",
+    "solve.smoothnessreffrequency=143650817.87109375",
 ]
 
-#   "solve.antennaconstraint=[]" differs when running also complexgain
 
 args_calibrate_complexgain = [
     "solve.mode=complexgain",
     "solve.applycal.steps=[fastphase]",
     "solve.applycal.fastphase.correction=phase000",
-    "solve.applycal.parmdb=fast_phases.h5parm",
-    "solve.h5parm=slow_gain_separate_0.h5parm",
     "msin.nchan=0",
     "solve.solint=75",
+    "solve.nchan=10",
     "msin.startchan=0",
+    "solve.solverlbfgs.dof=200.0",
+    "solve.solverlbfgs.iter=4",
+    "solve.solverlbfgs.minibatches=1",
 ]
 
 args_predict = [
@@ -67,11 +62,6 @@ args_predict = [
     "predict.beammode=array_factor",
     "msout.storagemanager=Dysco",
     "msout.storagemanager.databitrate=0",
-    # "predict.directions=[[Patch_104],[Patch_11],[Patch_114],[Patch_189],"
-    # "[Patch_222],[Patch_73],[Patch_78]]",
-    # "predict.applycal.parmdb=field-solutions.h5",
-    # "msin=/tmp/c2zkydk3/stgadba1bda-7cda-4ae0-a9e2-81a73319ca3a/midbands.ms",
-    "msout=midbands.ms.mjd5020557063.outlier_1_modeldata",
     "predict.onebeamperpatch=False",
     # "predict.sourcedb=outlier_1_predict_skymodel.txt",
     # "msin.starttime=21Dec2017/07:11:03.906",
@@ -83,49 +73,86 @@ common_args = [
 ]
 
 
-def run_dp3(msin, mode):
-    """Run DP3 with predefined arguments"""
-    if mode == "predict":
-        check_call(
-            [
-                "/home/csalvoni/scratch/schaap/dp3/build/DP3",
-                f"msin={msin}",
-                "msin.starttime=29-Mar-2013/13:59:53.007",
-                "predict.applycal.parmdb=fast_phase_0.h5parm",
-                "predict.directions=[[Patch_0],[Patch_1],[Patch_10],[Patch_11]"
-                ",[Patch_12],[Patch_13],[Patch_14],[Patch_15],[Patch_16],"
-                "[Patch_17],[Patch_18],[Patch_19],[Patch_2],[Patch_20],"
-                "[Patch_21],[Patch_22],[Patch_23],[Patch_24],[Patch_25],"
-                "[Patch_26],[Patch_27],[Patch_3],[Patch_4],[Patch_5],"
-                "[Patch_6],[Patch_7],[Patch_8],[Patch_9]]",
-                "predict.sourcedb=grouped.skymodel",
-            ]
-            + args_predict
-            + common_args
-        )
-    elif mode == "calibrate_phaseonly":
-        check_call(
-            [
-                "/home/csalvoni/scratch/schaap/dp3/build/DP3",
-                "msin.starttime=29-Mar-2013/13:59:53.007",
-                f"msin={msin}",
-                "solve.antennaconstraint=[]",
-                "solve.sourcedb=grouped.skymodel",
-            ]
-            + args_calibrate_common
-            + args_calibrate_scalarphase
-            + common_args
-        )
-    elif mode == "calibrate":
-        # todo
-        check_call(
-            [
-                "/home/csalvoni/scratch/schaap/dp3/build/DP3",
-                "msin.starttime=29-Mar-2013/13:59:53.007",
-                f"msin={msin}",
-                "solve.antennaconstraint=[]",
-            ]
-            + args_calibrate_common
-            + args_calibrate_scalarphase
-            + common_args
-        )
+def predict(msin, starttime, directions, input_skymodel, solutions_to_apply):
+    """This workflow performs direction-dependent prediction of sector sky
+    models and subracts the resulting model data from the input data,
+    reweighting if desired. The resulting data are suitable for imaging."""
+
+    check_call(
+        [
+            "/home/csalvoni/scratch/schaap/dp3/build/DP3",
+            f"msin={msin}",
+            f"msin.starttime={starttime}",
+            f"predict.applycal.parmdb={solutions_to_apply}",
+            f"predict.directions={directions}",
+            f"predict.sourcedb={input_skymodel}",
+            "msout=midbands.ms.mjd5020557063.outlier_1_modeldata",
+            "msout.overwrite=true",
+        ]
+        + args_predict
+        + common_args
+    )
+
+
+def calibrate_scalarphase(
+    msin,
+    starttime,
+    input_skymodel,
+    constraint_antennas,
+    output_solutions="fast_phase_0.h5parm",
+):
+    """(1)  a fast phase-only calibration (with
+    core stations constrianed to have the same solutions) to correct for
+    ionospheric effects, (2) a joint slow amplitude calibration (with all
+    stations constrained to have the same solutions) to correct for beam
+    errors"""
+
+    antennaconstraint = ["solve.antennaconstraint=[]"]
+    if constraint_antennas:
+        antennaconstraint = [
+            "solve.antennaconstraint=[[CS001HBA0,CS002HBA0,"
+            "CS002HBA1,CS004HBA1,RS106HBA,RS208HBA,RS305HBA,RS307HBA]]"
+        ]
+
+    check_call(
+        [
+            "/home/csalvoni/scratch/schaap/dp3/build/DP3",
+            f"msin.starttime={starttime}",
+            f"msin={msin}",
+            f"solve.sourcedb={input_skymodel}",
+            f"solve.h5parm={output_solutions}",
+            "msout=/var/scratch/csalvoni/data/test.MS",
+            "msout.overwrite=true",
+        ]
+        + antennaconstraint
+        + args_calibrate_common
+        + args_calibrate_scalarphase
+        + common_args,
+    )
+
+
+def calibrate_complexgain(
+    msin,
+    starttime,
+    input_skymodel="calibration_skymodel.txt",
+    solutions_to_apply="fast_phases.h5parm",
+    output_solutions="slow_gain_separate_0.h5parm",
+):
+    """(3) a further unconstrained slow gain calibration to correct for "
+    "station-to-station differences."""
+
+    check_call(
+        [
+            "/home/csalvoni/scratch/schaap/dp3/build/DP3",
+            f"msin.starttime={starttime}",
+            f"msin={msin}",
+            f"solve.applycal.parmdb={solutions_to_apply}",
+            f"solve.h5parm={output_solutions}",
+            f"solve.sourcedb={input_skymodel}",
+            "msout=/var/scratch/csalvoni/data/test.MS",
+            "msout.overwrite=true",
+        ]
+        + args_calibrate_common
+        + args_calibrate_complexgain
+        + common_args
+    )
