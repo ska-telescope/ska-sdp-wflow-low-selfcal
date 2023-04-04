@@ -74,16 +74,6 @@ common_args = [
     "-apply-facet-solutions",
     "fast_phase_0.h5parm",
     "phase000",
-    # "/tmp/upgujgmu/stg1acec759-9087-4e32-ab80-7fcb82955291/midbands.ms.mjd5020557063_field.sector_1.prep",
-    # "/tmp/upgujgmu/stg2af483a4-ad15-4717-b0ba-53b26dae5c40/midbands.ms.mjd5020559947_field.sector_1.prep",
-    # "/tmp/upgujgmu/stg5a25b09f-1017-4da0-abc2-c85a9717a558/midbands.ms.mjd5020562823_field.sector_1.prep",
-    # "/tmp/upgujgmu/stgc6ad4ae4-16e4-4f65-8e4f-c36dc9e544f0/midbands.ms.mjd5020565707_field.sector_1.prep",
-    # "/tmp/upgujgmu/stgdd4d4e28-6292-4d96-a597-6e315c5a10fe/midbands.ms.mjd5020568583_field.sector_1.prep",
-    # "/tmp/upgujgmu/stgd1a715eb-5234-4456-be43-9950f64b97bb/midbands.ms.mjd5020571459_field.sector_1.prep",
-    # "/tmp/upgujgmu/stg06978b90-3698-4b65-bb79-b70ab25aa4af/midbands.ms.mjd5020574343_field.sector_1.prep",
-    # "/tmp/upgujgmu/stg75cf4367-31fb-4c19-856b-1a64079da418/midbands.ms.mjd5020577219_field.sector_1.prep",
-    # "/tmp/upgujgmu/stge0ae543d-4f66-42d9-8a58-5578af1c5d7e/midbands.ms.mjd5020580103_field.sector_1.prep",
-    # "/tmp/upgujgmu/stg218f562f-b080-4734-988c-8769c4cec65a/midbands.ms.mjd5020582979_field.sector_1.prep
 ]
 
 
