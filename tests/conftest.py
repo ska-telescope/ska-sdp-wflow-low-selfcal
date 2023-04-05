@@ -9,7 +9,7 @@ import pytest
 TEST_DATA = "../tests/test_data"
 
 
-@pytest.fixture(scope="session", autouse=False)
+@pytest.fixture(scope="session", autouse=False, name="create_environment")
 def source_env(run_dp3=True, run_wsclean=True):
     """Define a temporary folder to run the test. The folder is deleted
     once the test has been run"""
