@@ -3,18 +3,14 @@
 """Tests for the ska_sdp_wflow_low_selfcal module."""
 
 
-from ska_sdp_wflow_low_selfcal.pipeline.dp3_helper import (
-    calibrate_complexgain,
-    calibrate_scalarphase,
-    predict,
-)
+from ska_sdp_wflow_low_selfcal.pipeline.dp3_helper import Dp3Runner
 
 MSIN = "tNDPPP-generic.MS"
 
 
 def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
     """Test DP3 phase only calibration"""
-
+    dp3_runner = Dp3Runner("/home/csalvoni/scratch/schaap/dp3/build/DP3")
     # Optional: read directions from skymodel
     directions = (
         "[[Patch_0],[Patch_1],[Patch_10],[Patch_11],[Patch_12],"
@@ -24,7 +20,7 @@ def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
         "[Patch_5],[Patch_6],[Patch_7],[Patch_8],[Patch_9]]"
     )
 
-    calibrate_scalarphase(
+    dp3_runner.calibrate_scalarphase(
         f"{MSIN}",
         "29-Mar-2013/13:59:53.007",
         "grouped.skymodel",
@@ -35,7 +31,7 @@ def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
     # assert that the h5parm is created and contains the right fields
     assert True
 
-    predict(
+    dp3_runner.predict(
         f"{MSIN}",
         "29-Mar-2013/13:59:53.007",
         directions,
@@ -47,8 +43,10 @@ def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
 
 def test_pipeline_complex(create_environment):  # pylint: disable=W0613
     """Test DP3 calibration"""
+
+    dp3_runner = Dp3Runner("/home/csalvoni/scratch/schaap/dp3/build/DP3")
     # Optional: read directions from skymodel
-    calibrate_scalarphase(
+    dp3_runner.calibrate_scalarphase(
         f"{MSIN}",
         "29-Mar-2013/13:59:53.007",
         "grouped.skymodel",
@@ -59,7 +57,7 @@ def test_pipeline_complex(create_environment):  # pylint: disable=W0613
     # assert that the h5parm is created and contains the right fields
     assert True
 
-    calibrate_complexgain(
+    dp3_runner.calibrate_complexgain(
         f"{MSIN}",
         "29-Mar-2013/13:59:53.007",
         "grouped.skymodel",
