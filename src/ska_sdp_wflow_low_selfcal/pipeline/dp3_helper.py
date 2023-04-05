@@ -43,9 +43,6 @@ args_calibrate_complexgain = [
     "solve.solint=75",
     "solve.nchan=10",
     "msin.startchan=0",
-    "solve.solverlbfgs.dof=200.0",
-    "solve.solverlbfgs.iter=4",
-    "solve.solverlbfgs.minibatches=1",
 ]
 
 args_predict = [
