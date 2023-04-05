@@ -12,7 +12,7 @@ from ska_sdp_wflow_low_selfcal.pipeline.dp3_helper import (
 MSIN = "tNDPPP-generic.MS"
 
 
-def test_pipeline_phaseonly():
+def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
     """Test DP3 phase only calibration"""
 
     # Optional: read directions from skymodel
@@ -45,7 +45,7 @@ def test_pipeline_phaseonly():
     assert True
 
 
-def test_pipeline_complex():
+def test_pipeline_complex(create_environment):  # pylint: disable=W0613
     """Test DP3 calibration"""
     # Optional: read directions from skymodel
     calibrate_scalarphase(
