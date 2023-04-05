@@ -9,7 +9,13 @@ class Dp3Runner:
         self.dp3_exe = dp3_exe
 
     def predict(  # pylint: disable=R0913
-        self, msin, starttime, directions, input_skymodel, solutions_to_apply
+        self,
+        msin,
+        msout,
+        starttime,
+        directions,
+        input_skymodel,
+        solutions_to_apply,
     ):
         """This workflow performs direction-dependent prediction of sector sky
         models and subracts the resulting model data from the input data,
@@ -23,7 +29,7 @@ class Dp3Runner:
                 f"predict.applycal.parmdb={solutions_to_apply}",
                 f"predict.directions={directions}",
                 f"predict.sourcedb={input_skymodel}",
-                "msout=midbands.ms.mjd5020557063.outlier_1_modeldata",
+                f"msout={msout}",
                 "msout.overwrite=true",
             ]
             + self.args_predict
@@ -58,8 +64,7 @@ class Dp3Runner:
                 f"msin={msin}",
                 f"solve.sourcedb={input_skymodel}",
                 f"solve.h5parm={output_solutions}",
-                "msout=/var/scratch/csalvoni/data/test.MS",
-                "msout.overwrite=true",
+                "msout= ",
             ]
             + antennaconstraint
             + self.args_calibrate_common
@@ -91,6 +96,32 @@ class Dp3Runner:
             ]
             + self.args_calibrate_common
             + self.args_calibrate_complexgain
+            + self.common_args
+        )
+
+    def applybeam_shift_average(self, msin, msout, starttime):
+        """This step uses DP3 to prepare the input data for imaging. This involves
+        averaging, phase shifting, and optionally the application of the
+        calibration solutions at the center."""
+
+        check_call(
+            [
+                self.dp3_exe,
+                f"msin.starttime={starttime}",
+                f"msin={msin}",
+                f"msout={msout}",
+                "msin.datacolumn=DATA",
+                "msout.overwrite=True",
+                "msout.writefullresflag=False",
+                "steps=[applybeam,shift,avg]",
+                "shift.type=phaseshifter",
+                "avg.type=squash",
+                "msout.storagemanager=Dysco",
+                "applybeam.direction='[258.845708333deg, 57.4111944444deg]'",
+                "avg.freqstep=1",
+                "shift.phasecenter='[258.845708333deg, 57.4111944444deg]'",
+                "avg.timestep=1",
+            ]
             + self.common_args
         )
 
