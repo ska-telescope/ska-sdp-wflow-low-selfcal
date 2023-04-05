@@ -45,6 +45,7 @@ def test_pipeline_phaseonly(create_environment):  # pylint: disable=W0613
 
     dp3_runner.predict(
         f"{MSIN}",
+        "midbands.ms.mjd5020557063.outlier_1_modeldata"
         "29-Mar-2013/13:59:53.007",
         directions,
         "grouped.skymodel",
