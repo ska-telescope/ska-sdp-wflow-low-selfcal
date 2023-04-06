@@ -19,7 +19,7 @@ def is_wsclean_installed():
 def test_wsclean(create_environment):  # pylint: disable=W0613
     """Test wsclean imaging"""
     wsclean_runner = WSCleanRunner(PATH_TO_WSCLEAN_EXE)
-    wsclean_runner.run_wsclean(f"{MSIN}")
+    wsclean_runner.run_wsclean(f"{MSIN}", "facets.reg", "solutions.h5parm")
 
     # assert that the output fits are created and contains the right fields
 

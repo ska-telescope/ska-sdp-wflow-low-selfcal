@@ -18,7 +18,7 @@ class WSCleanRunner:
         "-gridder",
         "wgridder",
         "-temp-dir",
-        "/tmp/64ltgyh9",
+        "/var/scratch/csalvoni/rapthor_working_dir/chiara/tmp_imaging",
         "-parallel-deconvolution",
         "2048",
         "-pol",
@@ -62,8 +62,6 @@ class WSCleanRunner:
         "16",
         "-j",
         "40",
-        "-facet-regions",
-        "facets.reg",
         "-taper-gaussian",
         "0.0",
         "-size",
@@ -78,9 +76,6 @@ class WSCleanRunner:
         "-weight",
         "briggs",
         "-0.5",
-        "-apply-facet-solutions",
-        "fast_phase_0.h5parm",
-        "phase000",
     ]
 
     restore_args = [
@@ -89,14 +84,19 @@ class WSCleanRunner:
         "-restore-list",
     ]
 
-    def run_wsclean(self, msin):
+    def run_wsclean(self, msin, facets_file, solutions_file):
         """Run WSClean"""
         check_call(
             [
                 self.wsclean_exe,
+                "-facet-regions",
+                facets_file,
+                "-apply-facet-solutions",
+                solutions_file,
+                "phase000",
             ]
             + self.common_args
-            + [msin]
+            + msin
         )
 
     def restore(
