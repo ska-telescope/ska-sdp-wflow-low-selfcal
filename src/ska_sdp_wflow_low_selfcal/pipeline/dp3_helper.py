@@ -117,9 +117,9 @@ class Dp3Runner:
                 "shift.type=phaseshifter",
                 "avg.type=squash",
                 "msout.storagemanager=Dysco",
-                "applybeam.direction='[258.845708333deg, 57.4111944444deg]'",
+                "applybeam.direction=[258.845708333deg, 57.4111944444deg]",
                 "avg.freqstep=1",
-                "shift.phasecenter='[258.845708333deg, 57.4111944444deg]'",
+                "shift.phasecenter=[258.845708333deg, 57.4111944444deg]",
                 "avg.timestep=1",
             ]
             + self.common_args
