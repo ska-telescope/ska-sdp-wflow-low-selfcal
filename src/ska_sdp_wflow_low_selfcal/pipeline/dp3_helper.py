@@ -100,9 +100,9 @@ class Dp3Runner:
         )
 
     def applybeam_shift_average(self, msin, msout, starttime):
-        """This step uses DP3 to prepare the input data for imaging. This involves
-        averaging, phase shifting, and optionally the application of the
-        calibration solutions at the center."""
+        """This step uses DP3 to prepare the input data for imaging. This
+        involves averaging, phase shifting, and optionally the application of
+        the calibration solutions at the center."""
 
         check_call(
             [
