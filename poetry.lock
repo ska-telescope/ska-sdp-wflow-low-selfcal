@@ -250,6 +250,17 @@ unicode = ["unicodedata2 (>=15.0.0)"]
 woff = ["zopfli (>=0.1.4)", "brotlicffi (>=0.8.0)", "brotli (>=1.0.1)"]
 
 [[package]]
+name = "h5py"
+version = "3.8.0"
+description = "Read and write HDF5 files from Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = ">=1.14.5"
+
+[[package]]
 name = "importlib-resources"
 version = "5.12.0"
 description = "Read resources from Python packages"
@@ -734,7 +745,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.1"
-content-hash = "fca01b7c682d11d7e8728d3a16f2599c80691a365e2665640ef8b005131b236f"
+content-hash = "da37a1e2845c6b0e92fbde47b0910df45eaa0c99def19416c06750fda4bf8a9d"
 
 [metadata.files]
 astroid = []
@@ -758,6 +769,7 @@ everybeam = []
 exceptiongroup = []
 flake8 = []
 fonttools = []
+h5py = []
 importlib-resources = []
 iniconfig = []
 isort = []
