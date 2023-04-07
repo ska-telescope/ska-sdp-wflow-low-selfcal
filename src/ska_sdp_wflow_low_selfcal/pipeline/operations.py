@@ -2,6 +2,13 @@
 
 import logging
 
+from ska_sdp_wflow_low_selfcal.pipeline.support.combine_h5parms import (
+    combine_h5parms,
+)
+from ska_sdp_wflow_low_selfcal.pipeline.support.H5parm_collector import (
+    collect_h5parms,
+)
+
 MSIN = "/var/scratch/csalvoni/rapthor_working_dir/chiara/midbands.ms"
 WORK_DIR = "/var/scratch/csalvoni/rapthor_working_dir/chiara"
 START_TIMES = [
@@ -22,20 +29,28 @@ def calibrate_1(dp3_runner):
     """Define calibrate operation"""
     # ------------------------ Calibrate_1 0:52:21
     logging.info("Start calibrate_1")
+    output_solutions_filenames = []
     for i, start_time in enumerate(START_TIMES):
+        output_solution_filename = (
+            f"{WORK_DIR}/outputs/out_calibration_1_fast_phase_"
+            + str(i)
+            + ".h5parm",
+        )
         dp3_runner.calibrate_scalarphase(
             f"{MSIN}",
             start_time,
             f"{WORK_DIR}/inputs/in_calibration_1.txt",
             False,
-            f"{WORK_DIR}/outputs/out_calibration_1_fast_phase_"
-            + str(i)
-            + ".h5parm",
+            output_solution_filename,
         )
+        output_solutions_filenames.append(output_solution_filename)
 
-    # Missing 1: stitch all solutions together
-    # Shortcut: get solutions from rapthor output
-    # Implement in AST-1236
+    # Stitch all solutions together
+    collect_h5parms(
+        output_solutions_filenames,
+        "in_predict_1_field-solutions.h5",
+        clobber=True,
+    )
 
     # Missing 2: get outlier_1_predict_skymodel (implement in AST-1236)
 
@@ -56,21 +71,28 @@ def calibrate_2(dp3_runner):
         f"{WORK_DIR}/predict_1/midbands.ms.mjd5020580103_field",
         f"{WORK_DIR}/predict_1/midbands.ms.mjd5020582979_field",
     ]
-
+    output_solutions_filenames = []
     for i, start_time in enumerate(START_TIMES):
+        output_solution_filename = (
+            f"{WORK_DIR}/outputs/out_calibration_2_fast_phase_"
+            + str(i)
+            + ".h5parm",
+        )
         dp3_runner.calibrate_scalarphase(
             msin_after_predict[i],
             start_time,
             f"{WORK_DIR}/inputs/in_calibration_2.txt",
             False,
-            f"{WORK_DIR}/outputs/out_calibration_2_fast_phase_"
-            + str(i)
-            + ".h5parm",
+            output_solution_filename,
         )
+        output_solutions_filenames.append(output_solution_filename)
 
-    # Missing 1: stitch all solutions together
-    # Shortcut: get solutions from rapthor output
-    # Implement in AST-1236
+    # Stitch all solutions together
+    collect_h5parms(
+        output_solutions_filenames,
+        "in_image_2_field-solutions.h5",
+        clobber=True,
+    )
 
     # Missing 2: get outlier_1_predict_skymodel (implement in AST-1236)
 
@@ -127,7 +149,7 @@ def predict_1(dp3_runner):
             directions,
             f"{WORK_DIR}/inputs/outlier_1_predict_skymodel.txt",
             f"{WORK_DIR}/outputs/out_calibration_1_fast_phase_"
-            f"{WORK_DIR}/inputs/in_predict_1_field-solutions.h5",
+            "in_predict_1_field-solutions.h5",
         )
 
     # Missing 3: subtract_sector_models.py * 10 times
@@ -171,7 +193,7 @@ def predict_3(dp3_runner):
     # IN: outlier_1_modeldata -> OUT: mjd5020559947_field
 
 
-def image_1(dp3_runner, wsclean_runner, solutions_to_apply):
+def image_1(dp3_runner, wsclean_runner, solutions_to_apply, facets_file):
     """Define imaging operation"""
     # ------------------------ Image_1 7:06:40
     logging.info("Start Image_1")
@@ -215,9 +237,6 @@ def image_1(dp3_runner, wsclean_runner, solutions_to_apply):
         f"{WORK_DIR}/predict_1/midbands.ms.mjd5020580103_field.sector_1.prep",
         f"{WORK_DIR}/predict_1/midbands.ms.mjd5020582979_field.sector_1.prep",
     ]
-
-    facets_file = f"{WORK_DIR}/inputs/sector_1_facets_ds9.reg"
-    solutions_to_apply = f"{WORK_DIR}/inputs/field-solutions_calibration_1.h5"
 
     wsclean_runner.run_wsclean(input_imaging, facets_file, solutions_to_apply)
 

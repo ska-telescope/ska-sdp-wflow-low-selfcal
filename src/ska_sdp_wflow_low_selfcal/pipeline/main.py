@@ -35,6 +35,7 @@ def main():
         dp3_runner,
         wsclean_runner,
         f"{WORK_DIR}/inputs/field-solutions_calibration_1.h5",
+        f"{WORK_DIR}/inputs/image_1_sector_1_facets_ds9.reg"
     )
 
     # Missing: how to get the skymodel for calibration_2
@@ -45,7 +46,8 @@ def main():
     image_1(
         dp3_runner,
         wsclean_runner,
-        f"{WORK_DIR}/inputs/field-solutions_calibration_2.h5",
+        "in_predict_1_field-solutions.h5",
+        f"{WORK_DIR}/inputs/image_2_sector_1_facets_ds9.reg"
     )
 
     # Calibrate_3 2:14:40
@@ -56,7 +58,8 @@ def main():
     image_3(
         dp3_runner,
         wsclean_runner,
-        f"{WORK_DIR}/inputs/field-solutions_calibration_3.h5",
+        "in_image_3_field-solutions.h5",
+        f"{WORK_DIR}/inputs/image_3_sector_1_facets_ds9.reg"
     )
 
 
