@@ -11,6 +11,7 @@ pluggy = "^1.0.0"
 astropy = "^5.2.2"
 losoto = "^2.4.1"
 lsmtool = "^1.4.11"
+h5py = "^3.8.0"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.12.0"
