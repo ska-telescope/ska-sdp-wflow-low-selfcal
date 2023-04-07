@@ -5,6 +5,9 @@ import h5py
 import numpy as np
 from astropy.coordinates import Angle
 
+from ska_sdp_wflow_low_selfcal.pipeline.support.combine_h5parms import (
+    combine_h5parms,
+)
 from ska_sdp_wflow_low_selfcal.pipeline.support.H5parm_collector import (
     collect_h5parms,
 )
@@ -71,3 +74,26 @@ def test_collect_h5():
         )
         first = +75
         last = +75
+
+
+def test_combine_h5():
+    """Check that two H5 files are correclty combined"""
+    working_dir = "/var/scratch/csalvoni/rapthor_working_dir/chiara/outputs"
+    combine_h5parms(
+        f"{working_dir}/out_calibration_3_fast_phase_0.h5parm",
+        f"{working_dir}/out_calibration_3_slow_gain_separate_0.h5parm",
+        "combined.h5parm",
+        "p1p2a2_scalar",
+        solset1="sol000",
+        solset2="sol000",
+        reweight=False,
+        cal_names="Patch_1022,Patch_1042,Patch_1075,Patch_136,Patch_151,\
+        Patch_152,Patch_231,Patch_235,Patch_313,Patch_34,Patch_341,Patch_375,\
+        Patch_423,Patch_456,Patch_47,Patch_479,Patch_51,Patch_809,Patch_865,\
+        Patch_900",
+        cal_fluxes="1.1334742100000001,1.70710925,3.2476566,5.00693068,\
+        1.122316848,3.2364227,0.656659973,4.06428878,1.96108164,1.32103399,\
+        1.5094014900000001,0.9435658,0.88880649,0.812606685,\
+        6.2081472699999996,1.89063376,1.1275013843000001,13.01872833,\
+        3.0365853,1.9651040569999998",
+    )
