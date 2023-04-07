@@ -723,6 +723,14 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "wget"
+version = "3.2"
+description = "pure python download utility"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "wrapt"
 version = "1.15.0"
 description = "Module for decorators, wrappers and monkey patching."
@@ -745,7 +753,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.1"
-content-hash = "da37a1e2845c6b0e92fbde47b0910df45eaa0c99def19416c06750fda4bf8a9d"
+content-hash = "4566700f31294f03e1b0d50c27f6017720ce37162c3e555908e806c3181b53cb"
 
 [metadata.files]
 astroid = []
@@ -823,5 +831,6 @@ tomli = [
 ]
 tomlkit = []
 typing-extensions = []
+wget = []
 wrapt = []
 zipp = []
