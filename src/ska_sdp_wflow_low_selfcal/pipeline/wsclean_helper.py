@@ -18,7 +18,7 @@ class WSCleanRunner:
         "-gridder",
         "wgridder",
         "-temp-dir",
-        "/tmp/64ltgyh9", # TODO make temp dir configurable
+        "/tmp/64ltgyh9",  # TO-DO make temp dir configurable
         "-parallel-deconvolution",
         "2048",
         "-pol",

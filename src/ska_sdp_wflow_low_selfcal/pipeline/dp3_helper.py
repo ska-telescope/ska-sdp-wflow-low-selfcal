@@ -119,7 +119,8 @@ class Dp3Runner:
                 "msout.storagemanager=Dysco",
                 "applybeam.direction='[258.845708333deg, 57.4111944444deg]'",
                 "avg.freqstep=1",
-                "shift.phasecenter='[258.845708333deg, 57.4111944444deg]'", # MS specific, TODO:  Make phasecenter configurable
+                "shift.phasecenter='[258.845708333deg, 57.4111944444deg]'",
+                # MS specific, TO-DO:  Make phasecenter configurable
                 "avg.timestep=1",
             ]
             + self.common_args
@@ -153,7 +154,8 @@ class Dp3Runner:
         "solve.maxiter=150",
         "solve.solint=1",
         "solve.smoothnessrefdistance=0.0",
-        "solve.smoothnessreffrequency=143650817.87109375", # MS specific, TODO: make smoothnessreffrequency configurable
+        "solve.smoothnessreffrequency=143650817.87109375",  # MS specific,
+        # TO-DO: make smoothnessreffrequency configurable
     ]
 
     args_calibrate_complexgain = [
