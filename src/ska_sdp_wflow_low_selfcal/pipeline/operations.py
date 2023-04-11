@@ -34,7 +34,7 @@ def calibrate_1(dp3_runner):
         output_solution_filename = (
             f"{WORK_DIR}/outputs/out_calibration_1_fast_phase_"
             + str(i)
-            + ".h5parm",
+            + ".h5parm"
         )
         dp3_runner.calibrate_scalarphase(
             f"{MSIN}",
@@ -148,7 +148,6 @@ def predict_1(dp3_runner):
             start_time,
             directions,
             f"{WORK_DIR}/inputs/outlier_1_predict_skymodel.txt",
-            f"{WORK_DIR}/outputs/out_calibration_1_fast_phase_"
             "in_predict_1_field-solutions.h5",
         )
 
