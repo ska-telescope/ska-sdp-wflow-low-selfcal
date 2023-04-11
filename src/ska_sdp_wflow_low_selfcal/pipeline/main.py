@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-" This script sefines a SKA LOW self calibration workflow"
+" This script defines a SKA LOW self calibration workflow"
 
 
 def main():
