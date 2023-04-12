@@ -1,29 +1,28 @@
 """ In this module all the fixture to run the python tests are defined """
 import os
 import shutil
-import uuid
 from subprocess import check_call
 
 import pytest
 
-TEST_DATA = "../tests/test_data"
+TEST_DATA = "/home/csalvoni/schaap/ska-sdp-wflow-low-selfcal-branch/\
+ska-sdp-wflow-low-selfcal/tests/test_data"
+
+CWD = os.getcwd()
 
 
-@pytest.fixture(scope="session", autouse=False, name="create_environment")
-def source_env(run_dp3=True, run_wsclean=True):
+@pytest.fixture(autouse=False, name="create_environment")
+def source_env(tmp_path, run_dp3=True, run_wsclean=True):
     """Define a temporary folder to run the test. The folder is deleted
     once the test has been run"""
+    os.chdir(tmp_path)
 
     ms_name = "tNDPPP-generic.MS"
-    current_directory = os.getcwd()
-
-    os.chdir(current_directory)
-    tmpdir = str(uuid.uuid4())
-    os.mkdir(tmpdir)
-    os.chdir(tmpdir)
     source = f"{TEST_DATA}/{ms_name}.tgz"
     if not os.path.isfile(source):
         raise IOError(f"Not able to find {source}.")
+    check_call(["tar", "xf", source])
+    # untar_ms(f"{tcf.RESOURCEDIR}/{MSIN}.tgz")
     check_call(["tar", "xf", source])
 
     if run_dp3:
@@ -34,8 +33,7 @@ def source_env(run_dp3=True, run_wsclean=True):
     yield
 
     # Post-test: clean up
-    os.chdir(current_directory)
-    shutil.rmtree(tmpdir)
+    os.chdir(CWD)
 
 
 def copy_data_dp3():
