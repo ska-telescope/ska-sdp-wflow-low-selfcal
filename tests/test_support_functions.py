@@ -5,6 +5,7 @@ import h5py
 import numpy as np
 from astropy.coordinates import Angle
 
+from ska_sdp_wflow_low_selfcal.pipeline.support.blank_image import blank_image
 from ska_sdp_wflow_low_selfcal.pipeline.support.combine_h5parms import (
     combine_h5parms,
 )
@@ -96,4 +97,18 @@ def test_combine_h5():
         1.5094014900000001,0.9435658,0.88880649,0.812606685,\
         6.2081472699999996,1.89063376,1.1275013843000001,13.01872833,\
         3.0365853,1.9651040569999998",
+    )
+
+
+def test_blank_image():
+    """Test generation of mask"""
+    blank_image(
+        "sector_1_mask.fits",
+        input_image=None,
+        vertices_file="/var/scratch/csalvoni/rapthor_working_dir/chiara/inputs\
+        /sector_1_vertices.pkl",
+        reference_ra_deg="258.845708333",
+        reference_dec_deg="57.4111944444",
+        cellsize_deg="0.00034722222222222224",
+        imsize="24394,24394",
     )

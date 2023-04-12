@@ -13,6 +13,7 @@ losoto = "^2.4.1"
 lsmtool = "^1.4.11"
 h5py = "^3.8.0"
 wget = "^3.2"
+shapely = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.12.0"
