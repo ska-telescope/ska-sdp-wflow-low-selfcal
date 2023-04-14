@@ -15,6 +15,11 @@ import scipy.interpolate as si
 from astropy.stats import circmean
 from losoto.h5parm import h5parm
 
+from ska_sdp_wflow_low_selfcal.pipeline.support.miscellaneous import (
+    string2bool,
+    string2list,
+)
+
 
 def expand_array(array, new_shape, new_axis_ind):
     """
@@ -512,71 +517,6 @@ def combine_phase1_phase2_amp2_scalar(ss1, ss2, sso):
     )
 
     return sso
-
-
-def string2bool(invar):
-    """
-    Converts a string to a bool
-
-    Parameters
-    ----------
-    invar : str
-        String to be converted
-
-    Returns
-    -------
-    result : bool
-        Converted bool
-    """
-    if invar is None:
-        return None
-    if isinstance(invar, bool):
-        return invar
-    elif isinstance(invar, str):
-        if "TRUE" in invar.upper() or invar == "1":
-            return True
-        elif "FALSE" in invar.upper() or invar == "0":
-            return False
-        else:
-            raise ValueError(
-                'input2bool: Cannot convert string "' + invar + '" to boolean!'
-            )
-    elif isinstance(invar, int) or isinstance(invar, float):
-        return bool(invar)
-    else:
-        raise TypeError("Unsupported data type:" + str(type(invar)))
-
-
-def string2list(invar):
-    """
-    Converts a string to a list
-
-    Parameters
-    ----------
-    invar : str
-        String to be converted
-
-    Returns
-    -------
-    result : list
-        Converted list
-    """
-    if invar is None:
-        return None
-    str_list = None
-    if type(invar) is str:
-        invar = invar.strip()
-        if invar.startswith("[") and invar.endswith("]"):
-            str_list = [f.strip(" '\"") for f in invar.strip("[]").split(",")]
-        elif "," in invar:
-            str_list = [f.strip(" '\"") for f in invar.split(",")]
-        else:
-            str_list = [invar.strip(" '\"")]
-    elif type(invar) is list:
-        str_list = [str(f).strip(" '\"") for f in invar]
-    else:
-        raise TypeError("Unsupported data type:" + str(type(invar)))
-    return str_list
 
 
 def combine_h5parms(
