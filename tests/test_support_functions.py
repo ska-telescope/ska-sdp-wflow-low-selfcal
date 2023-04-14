@@ -20,7 +20,9 @@ from ska_sdp_wflow_low_selfcal.pipeline.support_functions import (
 )
 
 
-def test_download_skymodel():
+def test_download_skymodel(
+    create_environment_support_functions,
+):  # pylint: disable=W0613
     """Test the download skymodel given a ra,dec direction"""
     ra = "01h37m41.299"  # pylint: disable=C0103
     dec = "+033d09m35.132"
@@ -33,7 +35,9 @@ def test_download_skymodel():
     assert os.path.isfile("test.skymodel")
 
 
-def test_collect_h5():
+def test_collect_h5(
+    create_environment_support_functions,
+):  # pylint: disable=W0613
     """Test the combination of multiple h5 files into one"""
     working_dir = "/var/scratch/csalvoni/rapthor_working_dir/chiara/outputs"
 
@@ -80,7 +84,9 @@ def test_collect_h5():
         last = +75
 
 
-def test_combine_h5():
+def test_combine_h5(
+    create_environment_support_functions,
+):  # pylint: disable=W0613
     """Check that two H5 files are correclty combined"""
     working_dir = "/var/scratch/csalvoni/rapthor_working_dir/chiara/outputs"
     combine_h5parms(
@@ -103,7 +109,9 @@ def test_combine_h5():
     )
 
 
-def test_blank_image():
+def test_blank_image(
+    create_environment_support_functions,
+):  # pylint: disable=W0613
     """Test generation of mask"""
     blank_image(
         "sector_1_mask.fits",
@@ -116,7 +124,9 @@ def test_blank_image():
     )
 
 
-def test_filter_skymodel():
+def test_filter_skymodel(
+    create_environment_support_functions,
+):  # pylint: disable=W0613
     """Test skymodel filtering"""
     working_dir = "/var/scratch/csalvoni/rapthor_working_dir/chiara"
 

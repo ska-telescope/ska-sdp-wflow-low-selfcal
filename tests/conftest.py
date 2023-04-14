@@ -36,6 +36,36 @@ def source_env(tmp_path, run_dp3=True, run_wsclean=True):
     os.chdir(CWD)
 
 
+@pytest.fixture(autouse=False, name="create_environment_support_functions")
+def source_env_support_functions(tmp_path):
+    """Define a temporary folder to run the test. The folder is deleted
+    once the test has been run"""
+    os.chdir(tmp_path)
+
+    copy_data_support_functions()
+    # Tests are executed here
+    yield
+
+    # Post-test: clean up
+    os.chdir(CWD)
+
+
+def copy_data_support_functions():
+    """Copy data needed for tests into temporary folder"""
+    files_to_copy = [
+        "facets.reg",
+        "fast_phase_0.h5parm",
+        "grouped.skymodel",
+        "sector_1_vertices.pkl",
+        "sector_1-sources-pb.txt",
+    ]
+    for filename in files_to_copy:
+        file_path = f"{TEST_DATA}/{filename}"
+        if not os.path.isfile(file_path):
+            raise IOError(f"Not able to find {file_path}.")
+        shutil.copy(file_path, filename)
+
+
 def copy_data_dp3():
     """Copy data needed for DP3 tests into temporary folder"""
     skymodel_path = f"{TEST_DATA}/grouped.skymodel"
