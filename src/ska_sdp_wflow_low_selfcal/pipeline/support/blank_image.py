@@ -6,25 +6,17 @@ to make a clean mask
 
 # pylint: skip-file
 import argparse
-import pickle
 import sys
 from argparse import RawTextHelpFormatter
 
 import numpy as np
 from astropy import wcs
 from astropy.io import fits as pyfits
-from PIL import Image, ImageDraw
-from shapely.geometry import Point, Polygon
-from shapely.prepared import prep
 
-
-def read_vertices(filename):
-    """
-    Returns facet vertices stored in input file
-    """
-    with open(filename, "rb") as f:
-        vertices = pickle.load(f)
-    return vertices
+from ska_sdp_wflow_low_selfcal.pipeline.support.miscellaneous import (
+    rasterize,
+    read_vertices,
+)
 
 
 def make_template_image(
@@ -176,48 +168,6 @@ def make_template_image(
     hdulist[0].header = header
     hdulist.writeto(image_name, overwrite=True)
     hdulist.close()
-
-
-def rasterize(verts, data, blank_value=0):
-    """
-    Rasterize a polygon into a data array
-
-    Parameters
-    ----------
-    verts : list of (x, y) tuples
-        List of input vertices of polygon to rasterize
-    data : 2-D array
-        Array into which rasterize polygon
-    blank_value : int or float, optional
-        Value to use for blanking regions outside the poly
-
-    Returns
-    -------
-    data : 2-D array
-        Array with rasterized polygon
-    """
-    poly = Polygon(verts)
-    prepared_polygon = prep(poly)
-
-    # Mask everything outside of the polygon plus its border (outline) with
-    # zeros (inside polygon plus border are ones)
-    mask = Image.new("L", (data.shape[0], data.shape[1]), 0)
-    ImageDraw.Draw(mask).polygon(verts, outline=1, fill=1)
-    data *= mask
-
-    # Now check the border precisely
-    mask = Image.new("L", (data.shape[0], data.shape[1]), 0)
-    ImageDraw.Draw(mask).polygon(verts, outline=1, fill=0)
-    masked_ind = np.where(np.array(mask).transpose())
-    points = [Point(xm, ym) for xm, ym in zip(masked_ind[0], masked_ind[1])]
-    outside_points = [v for v in points if prepared_polygon.disjoint(v)]
-    for outside_point in outside_points:
-        data[int(outside_point.y), int(outside_point.x)] = 0
-
-    if blank_value != 0:
-        data[data == 0] = blank_value
-
-    return data
 
 
 def blank_image(
