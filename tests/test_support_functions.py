@@ -9,6 +9,9 @@ from ska_sdp_wflow_low_selfcal.pipeline.support.blank_image import blank_image
 from ska_sdp_wflow_low_selfcal.pipeline.support.combine_h5parms import (
     combine_h5parms,
 )
+from ska_sdp_wflow_low_selfcal.pipeline.support.filter_skymodel import (
+    filter_skymodel,
+)
 from ska_sdp_wflow_low_selfcal.pipeline.support.H5parm_collector import (
     collect_h5parms,
 )
@@ -105,10 +108,35 @@ def test_blank_image():
     blank_image(
         "sector_1_mask.fits",
         input_image=None,
-        vertices_file="/var/scratch/csalvoni/rapthor_working_dir/chiara/inputs\
-        /sector_1_vertices.pkl",
+        vertices_file="sector_1_vertices.pkl",
         reference_ra_deg="258.845708333",
         reference_dec_deg="57.4111944444",
         cellsize_deg="0.00034722222222222224",
         imsize="24394,24394",
+    )
+
+
+def test_filter_skymodel():
+    """Test skymodel filtering"""
+    working_dir = "/var/scratch/csalvoni/rapthor_working_dir/chiara"
+
+    beam_ms = f"{working_dir}/midbands.ms.mjd5020557063_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020559947_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020562823_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020565707_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020568583_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020571459_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020574343_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020577219_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020580103_field.sector_1.prep,\
+    {working_dir}/predict_1/midbands.ms.mjd5020582979_field.sector_1.prep"
+
+    filter_skymodel(
+        f"{working_dir}/inputs/sector_1-MFS-image.fits",
+        "sector_1-sources-pb.txt",
+        "sector_1",
+        "sector_1_vertices.pkl",
+        beamMS=beam_ms,
+        threshisl=4.0,
+        threshpix=5.0,
     )
