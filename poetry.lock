@@ -52,6 +52,31 @@ tests-no-zope = ["hypothesis", "pympler", "pytest (>=4.3.0)", "pytest-xdist", "c
 tests_no_zope = ["hypothesis", "pympler", "pytest (>=4.3.0)", "pytest-xdist", "cloudpickle", "mypy (>=0.971,<0.990)", "pytest-mypy-plugins"]
 
 [[package]]
+name = "backports.shutil-get-terminal-size"
+version = "1.0.0"
+description = "A backport of the get_terminal_size function from Python 3.3's shutil."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "bdsf"
+version = "1.10.2"
+description = "Blob Detection and Source Finder"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+astropy = "*"
+"backports.shutil-get-terminal-size" = "*"
+numpy = "*"
+scipy = "*"
+
+[package.extras]
+ishell = ["ipython"]
+
+[[package]]
 name = "black"
 version = "23.3.0"
 description = "The uncompromising code formatter."
@@ -768,12 +793,14 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.1"
-content-hash = "6d98d380523055f29238eaf9114bfa3f2da696dfb371060824c48180098964fc"
+content-hash = "a6265a1b40b4880dca2d8c7046c9cbe07bfe0163247bd65da75b2d29e8765f26"
 
 [metadata.files]
 astroid = []
 astropy = []
 attrs = []
+"backports.shutil-get-terminal-size" = []
+bdsf = []
 black = []
 blosc2 = []
 build = []
